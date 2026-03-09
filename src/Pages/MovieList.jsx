@@ -6,6 +6,7 @@ const MovieList = () => {
     const { category } = useParams();
     const [movie, setMovie] = useState([]);
     
+    // Засварын горим
     const isMaintenance = false; 
 
     useEffect(() => {
@@ -28,33 +29,12 @@ const MovieList = () => {
         window.scrollTo(0, 0);
     }, [category, isMaintenance]);
 
-    // Build алдаанаас сэргийлж Style-ийг Object хэлбэрээр зарлав
-    const styles = {
-        page: {
-            minHeight: "80vh",
-            background: "#000",
-            color: "white",
-            paddingTop: "40px"
-        },
-        heading: {
-            textAlign: "center",
-            color: "#e50914",
-            fontSize: "2.5rem",
-            textShadow: "0 0 15px rgba(229, 9, 20, 0.4)",
-            textTransform: "uppercase"
-        },
-        container: {
-            display: "flex",
-            justifyContent: "center",
-            padding: "50px 0",
-            minHeight: "60vh"
-        }
-    };
-
     return (
-        <div style={styles.page}>
-            <h1 style={styles.heading}>ОНЦЛОХ КИНО: WAR MACHINE 2026</h1>
-            <div style={styles.container}>
+        <div style={{ minHeight: "80vh", background: "#000", color: "#fff", paddingTop: "40px" }}>
+            <h1 style={{ textAlign: "center", color: "#e50914", fontSize: "2.5rem" }}>
+                ОНЦЛОХ КИНО: WAR MACHINE 2026
+            </h1>
+            <div style={{ display: "flex", justifyContent: "center", padding: "50px 0" }}>
                 {movie.length > 0 ? (
                     movie.map((prevData) => (
                         <Card
