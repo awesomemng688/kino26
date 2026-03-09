@@ -2,13 +2,11 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "avengers",
   "compatibility_date": "2026-03-09",
+  "main": "src/index.js", // Эсвэл таны үндсэн нэвтрэх файл. Хэрэв байхгүй бол энэ мөрийг хасаад үзээрэй.
   "observability": {
     "enabled": true
   },
   "assets": {
     "directory": "build"
-  },
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
+  }
 }
