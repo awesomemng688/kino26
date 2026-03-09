@@ -8,7 +8,8 @@ const Home = () => {
 
     const [data, setData] = useState([]);
 
-    const API_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=31d6a9af8af968f358a6c5cc9f67daaf&language=en-US&page=1";
+    // API хэлийг монгол (mn-MN) болгож өөрчлөв
+    const API_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=31d6a9af8af968f358a6c5cc9f67daaf&language=mn-MN&page=1";
 
     const category = "now_playing";
 
@@ -26,7 +27,6 @@ const Home = () => {
     useEffect(() => {
         getData(API_URL);
         window.scrollTo(0, 0);
-
     }, [])
 
     const cards = data.map((movieData) => {
@@ -51,16 +51,18 @@ const Home = () => {
                 {
                     data && data.slice(0, 5).map(movieData => {
                         return(
-                            <div className="carousel-container">
+                            <div className="carousel-container" key={movieData.id}>
                                 <div className="carousel">
                                     <img src={`https://image.tmdb.org/t/p/original${movieData && movieData.backdrop_path}`} alt="Movie Banner" />
                                     <div className="movie-details">
                                         <div className="details-container">
-                                            <h2 className="movie-title">{movieData? movieData.original_title: ""}</h2>
-                                            <p className="movie-description">{movieData? movieData.overview: ""}</p>
+                                            <h2 className="movie-title">{movieData ? movieData.original_title : ""}</h2>
+                                            {/* Тайлбарыг монголоор харуулна */}
+                                            <p className="movie-description">{movieData ? movieData.overview : ""}</p>
                                             <div className="action-btn">
-                                                <Link to={`/${category}/${movieData.id}`} className="btn watch-now">Watch Now</Link>
-                                                <Link to={`/${category}/${movieData.id}`} className="btn watch-trailer">Watch Trailer</Link>
+                                                {/* Товчлуурыг монгол болгов */}
+                                                <Link to={`/${category}/${movieData.id}`} className="btn watch-now">Үзэх</Link>
+                                                <Link to={`/${category}/${movieData.id}`} className="btn watch-trailer">Трэйлер</Link>
                                             </div>
                                         </div>
                                         <div className="poster-container">
@@ -74,7 +76,8 @@ const Home = () => {
                 }
 
             </Carousel>
-            <h1 className="sub-heading">NOW PLAYING</h1>
+            {/* Гарчгийг монгол болгов */}
+            <h1 className="sub-heading">ОДОО ГАРЧ БУЙ КИНОНУУД</h1>
             <div className="container">
                 <br />
                 <br />
