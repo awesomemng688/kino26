@@ -6,11 +6,11 @@ const MovieList = () => {
     const { category } = useParams();
     const [movie, setMovie] = useState([]);
     
-    // Засварын горим (false байвал кино харагдана)
+    // Засварын горим
     const isMaintenance = false; 
 
     useEffect(() => {
-        // War Machine 2026 киноны мэдээлэл
+        // War Machine 2026 киноны мэдээллийг гараар оноож байна
         const warMachineData = [
             {
                 id: "war-machine-2026", 
@@ -31,7 +31,7 @@ const MovieList = () => {
     }, [category, isMaintenance]);
 
     return (
-        <>
+        <div className="movie-list-page">
             <h1 className="sub-heading">ОНЦЛОХ КИНО: WAR MACHINE 2026</h1>
             <div className="container" style={{ display: 'flex', justifyContent: 'center', padding: '50px 0' }}>
                 {movie.length > 0 ? (
@@ -54,8 +54,10 @@ const MovieList = () => {
             </div>
 
             <style>{`
-                .container {
-                    min-height: 60vh;
+                .movie-list-page {
+                    min-height: 80vh;
+                    background: #000;
+                    color: white;
                 }
                 .sub-heading {
                     text-align: center;
@@ -64,13 +66,16 @@ const MovieList = () => {
                     margin-top: 40px;
                     text-shadow: 0 0 15px rgba(229, 9, 20, 0.4);
                 }
+                .container {
+                    min-height: 60vh;
+                }
                 .coming-soon-wrapper {
                     text-align: center;
                     color: white;
-                    padding: 50px;
+                    padding: 100px;
                 }
             `}</style>
-        </>
+        </div>
     );
 };
 
