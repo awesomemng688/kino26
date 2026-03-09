@@ -1,4 +1,18 @@
-{
+<<<<<<< cloudflare/workers-autoconfig-2
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "avengers",
+  "compatibility_date": "2026-03-01",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "build"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+=======
   "name": "avengers",
   "compatibility_date": "2026-03-09"
+>>>>>>> main
 }
