@@ -1,1 +1,8 @@
-﻿{"$schema": "node_modules/wrangler/config-schema.json", "name": "avengers", "compatibility_date": "2026-03-09", "assets": {"directory": "build"}}
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "avengers",
+  "compatibility_date": "2026-03-09",
+  "assets": {
+    "directory": "build"
+  }
+}
