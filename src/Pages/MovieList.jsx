@@ -7,8 +7,19 @@ const MovieList = () => {
     const {category} = useParams();
     const [movie, setMovie] = useState([]);
 
-    // API URL-ийг энд тодорхойлсон хэвээр үлдээв
-    const MOVIE_API = `https://api.themoviedb.org/3/movie/${category? category: "popular"}?api_key=31d6a9af8af968f358a6c5cc9f67daaf&language=en-US&page=1`;
+    // API URL дээр language=mn-MN нэмж, киноны тайлбарыг монголоор татахыг оролдоно
+    const MOVIE_API = `https://api.themoviedb.org/3/movie/${category ? category : "popular"}?api_key=31d6a9af8af968f358a6c5cc9f67daaf&language=mn-MN&page=1`;
+
+    // Категорийн нэрийг монгол болгох функц
+    const getCategoryName = (cat) => {
+        switch(cat) {
+            case "popular": return "Алдартай";
+            case "top_rated": return "Өндөр үнэлгээтэй";
+            case "upcoming": return "Төд удахгүй";
+            case "now_playing": return "Одоо гарч буй";
+            default: return "Алдартай";
+        }
+    }
 
     useEffect(() => {
         async function getMovie(url){
@@ -25,7 +36,6 @@ const MovieList = () => {
 
         getMovie(MOVIE_API);
         
-        // Доорх мөр нь ESLint-ийн анхааруулгыг хааж, Cloudflare build-ийг гацаахгүй болгоно
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category]);
 
@@ -42,7 +52,8 @@ const MovieList = () => {
     
     return(
         <>
-            <h1 className="sub-heading">{(category? category: "Popular").toUpperCase()} MOVIES</h1>
+            {/* Гарчиг болон текстийг монгол болгов */}
+            <h1 className="sub-heading">{getCategoryName(category).toUpperCase()} КИНОНУУД</h1>
             <div className="container">
                 {movieCard}
             </div>
