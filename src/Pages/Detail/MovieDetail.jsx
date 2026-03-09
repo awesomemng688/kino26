@@ -6,14 +6,13 @@ const MovieDetail = () => {
   const { id } = useParams();
   const [currentMovie, setCurrentMovie] = useState({});
 
-  // API өгөгдөл татах функцийг useCallback-аар ороож, санах ойд хадгалах
   const getMovieDetail = useCallback(async (url) => {
     try {
       const movieDetail = await fetch(url);
       const allDetail = await movieDetail.json();
       setCurrentMovie(allDetail);
     } catch (error) {
-      console.log("Дэлгэрэнгүй мэдээлэл авахад алдаа гарлаа:", error);
+      console.log("Error fetching details:", error);
     }
   }, []);
 
@@ -23,12 +22,11 @@ const MovieDetail = () => {
     
     getMovieDetail(MOVIE_DETAIL_API);
     window.scrollTo(0, 0);
-    
   }, [id, getMovieDetail]); 
 
   return (
     <div className="details-container">
-      {/* Арын баннер хэсэг */}
+      {/* Background Banner */}
       <div
         className="movie-banner-container"
         style={{
@@ -36,8 +34,7 @@ const MovieDetail = () => {
             ? `url('https://image.tmdb.org/t/p/original${currentMovie.backdrop_path}')` 
             : "#1a1a1a",
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          height: '450px' 
+          backgroundPosition: 'center'
         }}
       ></div>
 
@@ -55,9 +52,9 @@ const MovieDetail = () => {
             <h1 className="movie-title">{currentMovie.original_title}</h1>
             <div className="movie-rating-release">
               <span className="movie-rating">
-                Үнэлгээ: <i className="rating-star fa-solid fa-star"></i> {currentMovie.vote_average ? Math.round(currentMovie.vote_average * 10) / 10 : 0}
+                Rating: <i className="rating-star fa-solid fa-star"></i> {currentMovie.vote_average ? Math.round(currentMovie.vote_average * 10) / 10 : 0}
               </span>
-              <span className="movie-release">Нээлт: {currentMovie.release_date}</span>
+              <span className="movie-release">Release: {currentMovie.release_date}</span>
             </div>
             <div className="movie-genres">
               {currentMovie.genres &&
@@ -65,16 +62,15 @@ const MovieDetail = () => {
                   <span key={data.id}>{data.name}</span>
                 ))}
             </div>
-            <p className="movie-description">{currentMovie.overview || "Тайлбар одоогоор алга байна."}</p>
+            <p className="movie-description">{currentMovie.overview || "No description available."}</p>
           </div>
         </div>
       </div>
 
-      {/* КИНО ТОГЛУУЛАГЧ ХЭСЭГ */}
+      {/* VIDEO PLAYER SECTION (Mobile Responsive) */}
       <div className="video-section">
-        <h2 className="player-title">КИНО ҮЗЭХ 🍿</h2>
+        <h2 className="player-title">WATCH MOVIE 🍿</h2>
         <div className="iframe-wrapper">
-          {/* Динамик тоглуулагч: War Machine (1265609) бол Vidoza-г, бусад үед автомат серверийг харуулна */}
           <iframe 
             src={id === "1265609" 
               ? "https://vidoza.net/embed-mw4fnlbhv8zg.html" 
@@ -82,8 +78,7 @@ const MovieDetail = () => {
             frameBorder="0" 
             allowFullScreen
             title="Movie Player"
-            // 'Refused to connect' алдаанаас сэргийлэх гол тохиргоо
-            referrerPolicy="origin" 
+            referrerPolicy="origin"
             sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
             allow="autoplay; encrypted-media; fullscreen"
           ></iframe>
@@ -91,43 +86,78 @@ const MovieDetail = () => {
         <p className="dev-credit">Server Developer by: Awesome.!</p>
       </div>
 
+      {/* RESPONSIVE CSS */}
       <style>{`
+        .movie-banner-container {
+          height: 450px;
+        }
+
+        .movie-details-container {
+          display: flex;
+          max-width: 1200px;
+          margin: -150px auto 0;
+          padding: 20px;
+          gap: 30px;
+          position: relative;
+          z-index: 2;
+        }
+
+        .movie-detail-left img {
+          width: 300px;
+          border-radius: 12px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* MOBILE OPTIMIZATION (Screens smaller than 768px) */
+        @media (max-width: 768px) {
+          .movie-banner-container {
+            height: 250px;
+          }
+          .movie-details-container {
+            flex-direction: column;
+            align-items: center;
+            margin-top: -100px;
+            text-align: center;
+          }
+          .movie-detail-left img {
+            width: 200px;
+          }
+          .movie-title {
+            font-size: 1.8rem;
+          }
+          .movie-genres {
+            justify-content: center;
+          }
+          .video-section {
+            padding: 10px;
+          }
+          .player-title {
+            font-size: 1.5rem;
+          }
+        }
+
         .video-section {
           max-width: 1100px;
           margin: 50px auto;
-          padding: 20px;
           text-align: center;
-        }
-        .player-title {
-          color: #e50914;
-          margin-bottom: 20px;
-          font-size: 2rem;
-          text-transform: uppercase;
-          letter-spacing: 2px;
         }
         .iframe-wrapper {
           position: relative;
-          padding-bottom: 56.25%; /* 16:9 харьцаа */
+          padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
           height: 0;
-          overflow: hidden;
           background: #000;
-          border: 2px solid #333;
           border-radius: 12px;
-          box-shadow: 0 0 25px rgba(229, 9, 20, 0.2);
+          overflow: hidden;
         }
         .iframe-wrapper iframe {
           position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
+          top: 0; left: 0; width: 100%; height: 100%;
         }
         .dev-credit {
           margin-top: 20px;
           font-size: 0.8rem;
           color: #555;
-          letter-spacing: 3px;
-          text-transform: uppercase;
+          letter-spacing: 2px;
         }
       `}</style>
     </div>
