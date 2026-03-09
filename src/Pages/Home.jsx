@@ -6,77 +6,53 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
     const [data, setData] = useState([]);
-    const isMaintenance = false; // Үндсэн сайтыг нээх
+    const isMaintenance = false;
 
     const getData = useCallback(async () => {
         if (isMaintenance) return;
         
-        const API_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=31d6a9af8af968f358a6c5cc9f67daaf&language=mn-MN&page=1";
+        const API_KEY = "31d6a9af8af968f358a6c5cc9f67daaf";
+        const API_URL = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=mn-MN&page=1`;
         
         try {
             const res = await fetch(API_URL);
             const allData = await res.json();
             setData(allData.results || []);
         } catch (error) {
-            console.log("Error fetching home data:", error);
+            console.error("Data fetch error:", error);
         }
     }, [isMaintenance]);
 
     useEffect(() => {
         getData();
         window.scrollTo(0, 0);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [getData]);
 
     return (
-        <>
+        <div style={{ background: "#000", minHeight: "100vh" }}>
             {isMaintenance ? (
-                <div className="maintenance-hero">
-                    <div className="maintenance-content">
-                        <h1 className="main-title">AVENGERS MOVIE</h1>
-                        <div className="divider"></div>
-                        <h2 className="status-text">ТУН УДАХГҮЙ...</h2>
-                        <p className="description">
-                            Бид вэб сайтаа шинэчилж байна. Илүү олон сонирхолтой кино, 
-                            хурдан тоглуулагчтайгаар эргэн ирэх болно.
-                        </p>
-                        <p className="developer-tag">Server Developer by: Awesome.!</p>
-                    </div>
+                <div style={{ height: "80vh", display: "flex", justifyContent: "center", alignItems: "center", color: "white" }}>
+                    <h1>ЗАСВАРТАЙ БАЙНА</h1>
                 </div>
             ) : (
                 <>
-                    <Carousel 
-                        showThumbs={false}
-                        autoPlay={true}
-                        infiniteLoop={true}
-                        showStatus={false}
-                        interval={5000}
-                    >
+                    <Carousel showThumbs={false} autoPlay infiniteLoop showStatus={false} interval={5000}>
                         {data.slice(0, 5).map(movieData => (
-                            <div className="carousel-container" key={movieData.id}>
-                                <div className="carousel">
-                                    <img src={`https://image.tmdb.org/t/p/original${movieData.backdrop_path}`} alt="Banner" />
-                                    <div className="movie-details">
-                                        <div className="details-container">
-                                            <h2 className="movie-title">{movieData.original_title}</h2>
-                                            <p className="movie-description">{movieData.overview}</p>
-                                            <div className="action-btn">
-                                                {/* category-ийн оронд шууд movie гэж бичив */}
-                                                <Link to={`/movie/${movieData.id}`} className="btn watch-now">Үзэх</Link>
-                                                <Link to={`/movie/${movieData.id}`} className="btn watch-trailer">Трэйлер</Link>
-                                            </div>
-                                        </div>
-                                        <div className="poster-container">
-                                            <img src={`https://image.tmdb.org/t/p/original${movieData.poster_path}`} alt="Poster" />
-                                        </div>
+                            <div key={movieData.id} className="carousel-container">
+                                <img src={`https://image.tmdb.org/t/p/original${movieData.backdrop_path}`} alt="Banner" style={{ opacity: 0.6 }} />
+                                <div className="movie-details" style={{ position: "absolute", bottom: "10%", left: "5%", textAlign: "left", color: "white" }}>
+                                    <h2 style={{ fontSize: "3rem" }}>{movieData.original_title}</h2>
+                                    <div style={{ marginTop: "20px" }}>
+                                        <Link to={`/movie/${movieData.id}`} className="btn watch-now" style={{ padding: "10px 25px", background: "#e50914", color: "white", textDecoration: "none", borderRadius: "5px", marginRight: "10px" }}>Үзэх</Link>
                                     </div>
                                 </div>
                             </div>
                         ))}
                     </Carousel>
 
-                    <h1 className="sub-heading">ОДОО ГАРЧ БУЙ КИНОНУУД</h1>
-                    <div className="container">
+                    <h1 style={{ color: "#e50914", textAlign: "center", margin: "40px 0", fontSize: "2rem" }}>ОДОО ГАРЧ БУЙ КИНОНУУД</h1>
+                    
+                    <div className="container" style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "20px" }}>
                         {data.map((movieData) => (
                             <Card
                                 key={movieData.id}
@@ -90,27 +66,8 @@ const Home = () => {
                     </div>
                 </>
             )}
-
-            <style>{`
-                .maintenance-hero {
-                    height: 85vh;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://image.tmdb.org/t/p/original/mDfBhS3erZjuZAn6Q8oqH9o9GZ6.jpg');
-                    background-size: cover;
-                    background-position: center;
-                    color: white;
-                    text-align: center;
-                    padding: 20px;
-                }
-                .main-title { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 900; }
-                .divider { height: 5px; width: 100px; background: #e50914; margin: 25px auto; border-radius: 10px; }
-                .status-text { color: #e50914; font-weight: bold; letter-spacing: 5px; }
-                .developer-tag { margin-top: 50px; font-size: 0.85rem; color: #555; font-weight: bold; text-transform: uppercase; }
-            `}</style>
-        </>
+        </div>
     );
-}
+};
 
 export default Home;
