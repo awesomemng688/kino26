@@ -6,63 +6,65 @@ const Footer = () => {
       <div className="footer-item">
         <div>
           <h3 className="underline">
-            Top 5 Rated Movies
+            Өндөр үнэлгээтэй 5 кино
           </h3>
           <ul>
-            <li>About</li>
-            <li>Contact</li>
-            <li>Disclaimer</li>
-            <li>Privacy Policy</li>
-            <li>Terms & Conditions</li>
+            <li>Бидний тухай</li>
+            <li>Холбоо барих</li>
+            <li>Анхааруулга</li>
+            <li>Нууцлалын бодлого</li>
+            <li>Үйлчилгээний нөхцөл</li>
           </ul>
         </div>
       </div>
       <div className="footer-item">
         <div>
           <h3 className="underline">
-            5 Alltime Popular Movies
+            Хамгийн алдартай 5 кино
           </h3>
           <ul>
-            <li>About</li>
-            <li>Contact</li>
-            <li>Disclaimer</li>
-            <li>Privacy Policy</li>
-            <li>Terms & Conditions</li>
+            <li>Бидний тухай</li>
+            <li>Холбоо барих</li>
+            <li>Анхааруулга</li>
+            <li>Нууцлалын бодлого</li>
+            <li>Үйлчилгээний нөхцөл</li>
           </ul>
         </div>
       </div>
       <div className="footer-item">
         <div>
           <h3 className="underline">
-            Pages
+            Хуудаснууд
           </h3>
           <ul>
-            <li>About</li>
-            <li>Contact</li>
-            <li>Disclaimer</li>
-            <li>Privacy Policy</li>
-            <li>Terms & Conditions</li>
+            <li>Бидний тухай</li>
+            <li>Холбоо барих</li>
+            <li>Анхааруулга</li>
+            <li>Нууцлалын бодлого</li>
+            <li>Үйлчилгээний нөхцөл</li>
           </ul>
         </div>
       </div>
 
       <div className="footer-item">
         <div className="footer-last">
-          <button>Sign Up</button>
+          {/* Sign Up -> Бүртгүүлэх болгов */}
+          <button>Бүртгүүлэх</button>
           <div className="footer-name-tag">
             <span className="footer-name">
               MovieSuggest <span className="left-border">|</span>
             </span>
-            <span className="footer-tag"> The Streaming Suggest</span>
+            <span className="footer-tag"> Кино санал болгох платформ</span>
           </div>
           <div className="social-icons">
             <i className="fa-brands fa-square-facebook"></i>
-            <i className="className-brands fa-instagram"></i>
+            <i className="fa-brands fa-instagram"></i>
             <i className="fa-brands fa-twitter"></i>
             <i className="fa-brands fa-youtube"></i>
             <i className="fa-brands fa-tiktok"></i>
           </div>
-          <p>Copyright © 2023 MovieSuggest</p>
+          {/* Оныг 2026 болгож шинэчлэв */}
+          <p>Зохиогчийн эрх © 2026 MovieSuggest</p>
         </div>
       </div>
     </div>
