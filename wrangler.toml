@@ -4,5 +4,6 @@ type = "javascript"
 
 main = "worker.js"
 
-[assets]
-directory = "build"
+[site]
+bucket = "./build"      # React-ийн build folder
+entry-point = "worker-site"
