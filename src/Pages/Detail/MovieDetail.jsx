@@ -69,20 +69,21 @@ const MovieDetail = () => {
 
       {/* VIDEO PLAYER SECTION */}
       <div className="video-section">
-        <h2 className="player-title">WATCH MOVIE 🍿</h2>
+        <h2 className="player-title">КИНО ҮЗЭХ 🍿</h2>
         <div className="iframe-wrapper">
           <iframe 
             src={id === "1265609" 
               ? "https://vidoza.net/embed-mw4fnlbhv8zg.html" 
               : `https://vidsrc.to/embed/movie/${id}`} 
             frameBorder="0" 
-            allowFullScreen={true}
+            // Бүх төрлийн хөтөчийн Full Screen эрхийг нээх
+            allowFullScreen
             webkitallowfullscreen="true"
             mozallowfullscreen="true"
             title="Movie Player"
-            referrerPolicy="origin"
-            // allow-presentation нэмснээр Fullscreen товчлуур идэвхжинэ
-            sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation allow-presentation"
+            referrerPolicy="no-referrer"
+            // Sandbox-ыг Full Screen ажиллахаар тохируулах
+            sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation allow-presentation allow-fullscreen"
             allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
           ></iframe>
         </div>
@@ -110,33 +111,12 @@ const MovieDetail = () => {
           box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        @media (max-width: 768px) {
-          .movie-banner-container {
-            height: 250px;
-          }
-          .movie-details-container {
-            flex-direction: column;
-            align-items: center;
-            margin-top: -100px;
-            text-align: center;
-          }
-          .movie-detail-left img {
-            width: 180px;
-          }
-          .movie-title {
-            font-size: 1.6rem;
-          }
-          .video-section {
-            padding: 5px;
-            margin: 20px auto;
-          }
-        }
-
         .video-section {
           max-width: 1100px;
           margin: 50px auto;
           text-align: center;
         }
+
         .iframe-wrapper {
           position: relative;
           padding-bottom: 56.25%; /* 16:9 харьцаа */
@@ -146,14 +126,48 @@ const MovieDetail = () => {
           overflow: hidden;
           box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
         }
+
         .iframe-wrapper iframe {
           position: absolute;
           top: 0; left: 0; width: 100%; height: 100%;
         }
+
+        /* 📱 ГАР УТАСНЫ ТУСГАЙ ЗАСВАР */
+        @media (max-width: 768px) {
+          .movie-banner-container {
+            height: 200px;
+          }
+          .movie-details-container {
+            flex-direction: column;
+            align-items: center;
+            margin-top: -80px;
+            text-align: center;
+            padding: 10px;
+          }
+          .movie-detail-left img {
+            width: 160px;
+          }
+          .movie-title {
+            font-size: 1.4rem;
+          }
+          /* Гар утас дээр тоглуулагчийг дэлгэц дүүргэж харуулах */
+          .video-section {
+            max-width: 100%;
+            margin: 20px 0;
+            padding: 0; /* Хажуугийн зайг арилгав */
+          }
+          .iframe-wrapper {
+            border-radius: 0; /* Ирмэгийг тэгшилж дэлгэцэнд наана */
+          }
+          .player-title {
+            font-size: 1.2rem;
+          }
+        }
+
         .dev-credit {
-          margin-top: 20px;
-          font-size: 0.8rem;
-          color: #555;
+          margin-top: 15px;
+          font-size: 0.7rem;
+          color: #666;
           letter-spacing: 2px;
         }
       `}</style>
