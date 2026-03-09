@@ -8,7 +8,7 @@ const MovieDetail = () => {
 
   const MOVIE_DETAIL_API = `https://api.themoviedb.org/3/movie/${id}?api_key=31d6a9af8af968f358a6c5cc9f67daaf&language=en-US`;
 
-  // useCallback ашиглан функцийг тогтвортой болгов
+  // getMovieDetail функцийг useCallback дотор хийснээр useEffect-ийн хамаарлын алдаа арилна
   const getMovieDetail = useCallback(async (url) => {
     try {
       const movieDetail = await fetch(url);
@@ -22,25 +22,30 @@ const MovieDetail = () => {
   useEffect(() => {
     getMovieDetail(MOVIE_DETAIL_API);
     window.scrollTo(0, 0);
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, getMovieDetail]);
+  }, [id]); // id өөрчлөгдөх бүрт шинэ мэдээлэл татна
 
   return (
     <div className="details-container">
       <div
         className="movie-banner-container"
         style={{
-          background: `url('https://image.tmdb.org/t/p/original${currentMovie.backdrop_path}')`,
+          background: currentMovie.backdrop_path 
+            ? `url('https://image.tmdb.org/t/p/original${currentMovie.backdrop_path}')` 
+            : "#1a1a1a",
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
       ></div>
       <div className="movie-details-container">
         <div className="movie-detail-left">
-          <img
-            src={`https://image.tmdb.org/t/p/original${currentMovie.poster_path}`}
-            alt={currentMovie.original_title || "poster"}
-          />
+          {currentMovie.poster_path && (
+            <img
+              src={`https://image.tmdb.org/t/p/original${currentMovie.poster_path}`}
+              alt={currentMovie.original_title || "poster"}
+            />
+          )}
         </div>
         <div className="movie-detail-right">
           <div className="title-category-para">
