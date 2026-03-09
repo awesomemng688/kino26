@@ -6,20 +6,23 @@ const Card = (props) => {
     
     return (
         <>
-        <Link className="card" to={`/${category? category : "now_playing"}/${props.id}`} >
+        <Link className="card" to={`/${category ? category : "now_playing"}/${props.id}`} >
             <img src={`https://image.tmdb.org/t/p/original${props.poster}`} alt="img" />
             <div className="rating">
                 <i className="fa-solid fa-star"></i> {props.rating}
-                <span>Release:<br/>{props.release}</span>
+                {/* Release -> Нээлт болгож өөрчлөв */}
+                <span>Нээлт:<br/>{props.release}</span>
                 <br />
                 <p className="title">{props.title}</p>
             </div>
             <div className="watch-trailer">
+                {/* Watch Options -> Үзэх сонголтууд болгож өөрчлөв */}
                 <button className="watch">
-                    <i className="fas fa-video"></i> Watch Options
+                    <i className="fas fa-video"></i> Үзэх сонголтууд
                 </button>
+                {/* Trailer -> Трэйлер болгож өөрчлөв */}
                 <button className="trailer">
-                    <i className="fa fa-play" aria-hidden="true"></i> Trailer
+                    <i className="fa fa-play" aria-hidden="true"></i> Трэйлер
                 </button>
              </div>
         </Link>
