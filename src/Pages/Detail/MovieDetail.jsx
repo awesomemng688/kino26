@@ -67,7 +67,7 @@ const MovieDetail = () => {
         </div>
       </div>
 
-      {/* VIDEO PLAYER SECTION (Mobile Responsive) */}
+      {/* VIDEO PLAYER SECTION */}
       <div className="video-section">
         <h2 className="player-title">WATCH MOVIE 🍿</h2>
         <div className="iframe-wrapper">
@@ -76,17 +76,19 @@ const MovieDetail = () => {
               ? "https://vidoza.net/embed-mw4fnlbhv8zg.html" 
               : `https://vidsrc.to/embed/movie/${id}`} 
             frameBorder="0" 
-            allowFullScreen
+            allowFullScreen={true}
+            webkitallowfullscreen="true"
+            mozallowfullscreen="true"
             title="Movie Player"
             referrerPolicy="origin"
-            sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
-            allow="autoplay; encrypted-media; fullscreen"
+            // allow-presentation нэмснээр Fullscreen товчлуур идэвхжинэ
+            sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation allow-presentation"
+            allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
           ></iframe>
         </div>
         <p className="dev-credit">Server Developer by: Awesome.!</p>
       </div>
 
-      {/* RESPONSIVE CSS */}
       <style>{`
         .movie-banner-container {
           height: 450px;
@@ -108,7 +110,6 @@ const MovieDetail = () => {
           box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* MOBILE OPTIMIZATION (Screens smaller than 768px) */
         @media (max-width: 768px) {
           .movie-banner-container {
             height: 250px;
@@ -120,19 +121,14 @@ const MovieDetail = () => {
             text-align: center;
           }
           .movie-detail-left img {
-            width: 200px;
+            width: 180px;
           }
           .movie-title {
-            font-size: 1.8rem;
-          }
-          .movie-genres {
-            justify-content: center;
+            font-size: 1.6rem;
           }
           .video-section {
-            padding: 10px;
-          }
-          .player-title {
-            font-size: 1.5rem;
+            padding: 5px;
+            margin: 20px auto;
           }
         }
 
@@ -143,11 +139,12 @@ const MovieDetail = () => {
         }
         .iframe-wrapper {
           position: relative;
-          padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+          padding-bottom: 56.25%; /* 16:9 харьцаа */
           height: 0;
           background: #000;
           border-radius: 12px;
           overflow: hidden;
+          box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
         }
         .iframe-wrapper iframe {
           position: absolute;
