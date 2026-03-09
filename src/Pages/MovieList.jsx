@@ -6,15 +6,15 @@ const MovieList = () => {
     const { category } = useParams();
     const [movie, setMovie] = useState([]);
     
-    // Засварын горимыг унтрааж, зөвхөн War Machine-ыг харуулна
+    // Засварын горим (false байвал кино харагдана)
     const isMaintenance = false; 
 
     useEffect(() => {
-        // War Machine 2026 киноны мэдээллийг гараар (Manual) оноож байна
+        // War Machine 2026 киноны мэдээлэл
         const warMachineData = [
             {
-                id: "war-machine-2026", // Тусгай ID
-                poster_path: "/placeholder-war-machine-poster.jpg", // TMDB дээрх постерын зам
+                id: "war-machine-2026", 
+                poster_path: "/placeholder-war-machine-poster.jpg", 
                 original_title: "War Machine (2026)",
                 vote_average: 9.5,
                 release_date: "2026-05-04"
@@ -28,7 +28,7 @@ const MovieList = () => {
         }
         
         window.scrollTo(0, 0);
-    }, [category]);
+    }, [category, isMaintenance]);
 
     return (
         <>
@@ -58,4 +58,20 @@ const MovieList = () => {
                     min-height: 60vh;
                 }
                 .sub-heading {
-                    text-align: center
+                    text-align: center;
+                    color: #e50914;
+                    font-size: 2.5rem;
+                    margin-top: 40px;
+                    text-shadow: 0 0 15px rgba(229, 9, 20, 0.4);
+                }
+                .coming-soon-wrapper {
+                    text-align: center;
+                    color: white;
+                    padding: 50px;
+                }
+            `}</style>
+        </>
+    );
+};
+
+export default MovieList;
