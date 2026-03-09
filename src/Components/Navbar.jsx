@@ -29,9 +29,11 @@ const Navbar = () => {
           />
         </NavLink>
         <div className="links-div">
+          {/* Home -> Нүүр */}
           <NavLink className="link" exact activeClassName="active" onClick={toggleMenu} to="/">
-            Home
+            Нүүр
           </NavLink>
+          {/* Popular -> Алдартай */}
           <NavLink
             className="link"
             exact
@@ -39,8 +41,9 @@ const Navbar = () => {
             onClick={toggleMenu}
             to="/popular"
           >
-            Popular
+            Алдартай
           </NavLink>
+          {/* Top Rated -> Өндөр үнэлгээтэй */}
           <NavLink
             className="link"
             exact
@@ -48,8 +51,9 @@ const Navbar = () => {
             onClick={toggleMenu}
             to="/top_rated"
           >
-            Top Rated
+            Өндөр үнэлгээтэй
           </NavLink>
+          {/* Upcoming -> Төд удахгүй */}
           <NavLink
             className="link"
             exact
@@ -57,14 +61,16 @@ const Navbar = () => {
             onClick={toggleMenu}
             to="/upcoming"
           >
-            Upcoming
+            Төд удахгүй
           </NavLink>
         </div>
       </div>
       <div className="search">
-        <input type="text" placeholder="Search for movies" />
+        {/* Placeholder-ийг монгол болгов */}
+        <input type="text" placeholder="Кино хайх..." />
       </div>
-      <button>Sign In</button>
+      {/* Sign In -> Нэвтрэх */}
+      <button>Нэвтрэх</button>
     </div>
   );
 };
