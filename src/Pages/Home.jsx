@@ -6,14 +6,11 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
     const [data, setData] = useState([]);
-    // false болгож сайтаа нээнэ
-    const isMaintenance = false; 
-
-    const category = "now_playing";
+    const isMaintenance = false; // Үндсэн сайтыг нээх
 
     const getData = useCallback(async () => {
-        if (isMaintenance) return; // Maintenance үед fetch хийхгүй
-
+        if (isMaintenance) return;
+        
         const API_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=31d6a9af8af968f358a6c5cc9f67daaf&language=mn-MN&page=1";
         
         try {
@@ -53,17 +50,18 @@ const Home = () => {
                         autoPlay={true}
                         infiniteLoop={true}
                         showStatus={false}
-                        interval={5000} // Слайд солигдох хугацаа 5 сек
+                        interval={5000}
                     >
-                        {data.slice(0, 6).map(movieData => (
+                        {data.slice(0, 5).map(movieData => (
                             <div className="carousel-container" key={movieData.id}>
                                 <div className="carousel">
                                     <img src={`https://image.tmdb.org/t/p/original${movieData.backdrop_path}`} alt="Banner" />
                                     <div className="movie-details">
                                         <div className="details-container">
                                             <h2 className="movie-title">{movieData.original_title}</h2>
-                                            <p className="movie-description">{movieData.overview || "Тайлбар одоогоор алга."}</p>
+                                            <p className="movie-description">{movieData.overview}</p>
                                             <div className="action-btn">
+                                                {/* category-ийн оронд шууд movie гэж бичив */}
                                                 <Link to={`/movie/${movieData.id}`} className="btn watch-now">Үзэх</Link>
                                                 <Link to={`/movie/${movieData.id}`} className="btn watch-trailer">Трэйлер</Link>
                                             </div>
@@ -92,7 +90,25 @@ const Home = () => {
                     </div>
                 </>
             )}
-            {/* Таны өмнөх <style> хэсэг хэвээрээ байна */}
+
+            <style>{`
+                .maintenance-hero {
+                    height: 85vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://image.tmdb.org/t/p/original/mDfBhS3erZjuZAn6Q8oqH9o9GZ6.jpg');
+                    background-size: cover;
+                    background-position: center;
+                    color: white;
+                    text-align: center;
+                    padding: 20px;
+                }
+                .main-title { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 900; }
+                .divider { height: 5px; width: 100px; background: #e50914; margin: 25px auto; border-radius: 10px; }
+                .status-text { color: #e50914; font-weight: bold; letter-spacing: 5px; }
+                .developer-tag { margin-top: 50px; font-size: 0.85rem; color: #555; font-weight: bold; text-transform: uppercase; }
+            `}</style>
         </>
     );
 }
