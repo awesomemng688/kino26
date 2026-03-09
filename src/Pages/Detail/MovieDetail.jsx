@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import "./moviedetail.scss";
 
 const MovieDetail = () => {
-  const { category, id } = useParams();
+  const { id } = useParams();
   const [currentMovie, setCurrentMovie] = useState({});
 
-  const MOVIE_DETAIL_API = `https://api.themoviedb.org/3/movie/${id}?api_key=31d6a9af8af968f358a6c5cc9f67daaf&language=en-US&page=1`;
+  const MOVIE_DETAIL_API = `https://api.themoviedb.org/3/movie/${id}?api_key=31d6a9af8af968f358a6c5cc9f67daaf&language=en-US`;
 
-  async function getMovieDetail(url) {
+  // useCallback ашиглан функцийг тогтвортой болгов
+  const getMovieDetail = useCallback(async (url) => {
     try {
       const movieDetail = await fetch(url);
       const allDetail = await movieDetail.json();
       setCurrentMovie(allDetail);
-      console.log(currentMovie);
     } catch (error) {
       console.log(error);
     }
-  }
+  }, []);
 
   useEffect(() => {
     getMovieDetail(MOVIE_DETAIL_API);
     window.scrollTo(0, 0);
-  }, [category, id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, getMovieDetail]);
 
   return (
     <div className="details-container">
@@ -30,26 +31,30 @@ const MovieDetail = () => {
         className="movie-banner-container"
         style={{
           background: `url('https://image.tmdb.org/t/p/original${currentMovie.backdrop_path}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
         }}
       ></div>
       <div className="movie-details-container">
         <div className="movie-detail-left">
           <img
             src={`https://image.tmdb.org/t/p/original${currentMovie.poster_path}`}
-            alt="img"
+            alt={currentMovie.original_title || "poster"}
           />
         </div>
         <div className="movie-detail-right">
           <div className="title-category-para">
             <h1 className="movie-title">{currentMovie.original_title}</h1>
             <div className="movie-rating-release">
-              <span className="movie-rating">Rating: <i className="rating-star fa-solid fa-star"></i> {Math.round(currentMovie.vote_average * 10)/10}</span>
+              <span className="movie-rating">
+                Rating: <i className="rating-star fa-solid fa-star"></i> {currentMovie.vote_average ? Math.round(currentMovie.vote_average * 10) / 10 : 0}
+              </span>
               <span className="movie-release">Release: {currentMovie.release_date}</span>
             </div>
             <div className="movie-genres">
               {currentMovie.genres &&
                 currentMovie.genres.slice(0, 4).map((data) => {
-                  return <span>{data.name}</span>;
+                  return <span key={data.id}>{data.name}</span>;
                 })}
             </div>
             <p className="movie-description">{currentMovie.overview}</p>
