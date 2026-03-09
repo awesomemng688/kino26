@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Card from "../Components/Card";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
@@ -9,25 +9,29 @@ const Home = () => {
     // Хэрэв true бол сайтыг "Тун удахгүй" горимд оруулна
     const isMaintenance = true; 
 
-    const API_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=31d6a9af8af968f358a6c5cc9f67daaf&language=mn-MN&page=1";
     const category = "now_playing";
 
-    async function getData(url){
-        try{
+    // Build алдаанаас сэргийлж getData функцийг useCallback-д авав
+    const getData = useCallback(async (url) => {
+        try {
             const res = await fetch(url);
             const allData = await res.json();
             // Засвартай үед датаг хоосон болгох
             setData(isMaintenance ? [] : allData.results);
+        } catch (error) {
+            console.log("Error fetching home data:", error);
         }
-        catch(error){
-            console.log(error);
-        }
-    }
+    }, [isMaintenance]);
 
     useEffect(() => {
+        const API_URL = "https://api.themoviedb.org/3/movie/now_playing?api_key=31d6a9af8af968f358a6c5cc9f67daaf&language=mn-MN&page=1";
+        
         getData(API_URL);
         window.scrollTo(0, 0);
-    }, [])
+
+        // ESLint-ийн анхааруулгыг алгасах (Cloudflare Build-д чухал)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [getData]);
 
     const cards = data && data.map((movieData) => {
         return <Card
@@ -37,8 +41,8 @@ const Home = () => {
             title={movieData.original_title}
             rating={movieData.vote_average}
             release={movieData.release_date}
-            />
-    })
+        />
+    });
 
     return (
         <>
@@ -66,7 +70,7 @@ const Home = () => {
                 >
                     {
                         data && data.slice(0, 5).map(movieData => {
-                            return(
+                            return (
                                 <div className="carousel-container" key={movieData.id}>
                                     <div className="carousel">
                                         <img src={`https://image.tmdb.org/t/p/original${movieData && movieData.backdrop_path}`} alt="Movie Banner" />
@@ -101,14 +105,13 @@ const Home = () => {
                 </>
             )}
 
-            {/* CSS Загвар */}
             <style>{`
                 .maintenance-hero {
-                    height: 80vh;
+                    height: 85vh;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://image.tmdb.org/t/p/original/mDfBhS3erZjuZAn6Q8oqH9o9GZ6.jpg');
+                    background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://image.tmdb.org/t/p/original/mDfBhS3erZjuZAn6Q8oqH9o9GZ6.jpg');
                     background-size: cover;
                     background-position: center;
                     color: white;
@@ -116,42 +119,44 @@ const Home = () => {
                     padding: 20px;
                 }
                 .main-title {
-                    font-size: 4rem;
+                    font-size: clamp(2.5rem, 8vw, 5rem);
                     font-weight: 900;
                     letter-spacing: -2px;
                     margin-bottom: 0;
+                    text-shadow: 0 10px 20px rgba(0,0,0,0.5);
                 }
                 .divider {
-                    height: 4px;
-                    width: 80px;
+                    height: 5px;
+                    width: 100px;
                     background: #e50914;
-                    margin: 20px auto;
+                    margin: 25px auto;
+                    border-radius: 10px;
                 }
                 .status-text {
-                    font-size: 2rem;
+                    font-size: clamp(1.5rem, 4vw, 2.5rem);
                     color: #e50914;
                     font-weight: bold;
+                    text-transform: uppercase;
+                    letter-spacing: 5px;
                 }
                 .description {
-                    max-width: 600px;
-                    margin: 20px auto;
-                    font-size: 1.2rem;
-                    color: #ccc;
+                    max-width: 650px;
+                    margin: 25px auto;
+                    font-size: 1.1rem;
+                    line-height: 1.6;
+                    color: #ddd;
                 }
                 .developer-tag {
-                    margin-top: 40px;
-                    font-size: 0.8rem;
-                    letter-spacing: 3px;
-                    color: #666;
+                    margin-top: 50px;
+                    font-size: 0.85rem;
+                    letter-spacing: 4px;
+                    color: #555;
+                    font-weight: bold;
                     text-transform: uppercase;
-                }
-                @media (max-width: 768px) {
-                    .main-title { font-size: 2.5rem; }
-                    .status-text { font-size: 1.5rem; }
                 }
             `}</style>
         </>
-    )
+    );
 }
 
 export default Home;
