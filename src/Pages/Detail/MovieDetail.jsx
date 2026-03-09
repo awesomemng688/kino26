@@ -6,9 +6,9 @@ const MovieDetail = () => {
   const { id } = useParams();
   const [currentMovie, setCurrentMovie] = useState({});
 
-  const MOVIE_DETAIL_API = `https://api.themoviedb.org/3/movie/${id}?api_key=31d6a9af8af968f358a6c5cc9f67daaf&language=en-US`;
+  // language=mn-MN болгож өөрчлөв
+  const MOVIE_DETAIL_API = `https://api.themoviedb.org/3/movie/${id}?api_key=31d6a9af8af968f358a6c5cc9f67daaf&language=mn-MN`;
 
-  // getMovieDetail функцийг useCallback дотор хийснээр useEffect-ийн хамаарлын алдаа арилна
   const getMovieDetail = useCallback(async (url) => {
     try {
       const movieDetail = await fetch(url);
@@ -24,7 +24,7 @@ const MovieDetail = () => {
     window.scrollTo(0, 0);
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]); // id өөрчлөгдөх бүрт шинэ мэдээлэл татна
+  }, [id]); 
 
   return (
     <div className="details-container">
@@ -52,9 +52,9 @@ const MovieDetail = () => {
             <h1 className="movie-title">{currentMovie.original_title}</h1>
             <div className="movie-rating-release">
               <span className="movie-rating">
-                Rating: <i className="rating-star fa-solid fa-star"></i> {currentMovie.vote_average ? Math.round(currentMovie.vote_average * 10) / 10 : 0}
+                Үнэлгээ: <i className="rating-star fa-solid fa-star"></i> {currentMovie.vote_average ? Math.round(currentMovie.vote_average * 10) / 10 : 0}
               </span>
-              <span className="movie-release">Release: {currentMovie.release_date}</span>
+              <span className="movie-release">Нээлт: {currentMovie.release_date}</span>
             </div>
             <div className="movie-genres">
               {currentMovie.genres &&
@@ -62,7 +62,8 @@ const MovieDetail = () => {
                   return <span key={data.id}>{data.name}</span>;
                 })}
             </div>
-            <p className="movie-description">{currentMovie.overview}</p>
+            {/* Киноны тайлбар хэсэг */}
+            <p className="movie-description">{currentMovie.overview || "Тайлбар одоогоор алга байна."}</p>
           </div>
         </div>
       </div>
