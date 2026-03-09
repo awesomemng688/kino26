@@ -1,13 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "avengers", 
+  "name": "avengers",
   "compatibility_date": "2026-03-09",
   "observability": {
     "enabled": true
   },
   "assets": {
-    "directory": "build",
-    "binding": "ASSETS"
+    "directory": "build" 
   },
   "compatibility_flags": [
     "nodejs_compat"
