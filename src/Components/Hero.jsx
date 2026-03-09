@@ -4,16 +4,19 @@ const Hero = () => {
   return (
     <div className="hero">
       <div className="content">
+        {/* Үндсэн гарчиг */}
         <h1 className="heading">
-          Your streaming guide for movies, TV shows & sports
+          Кино, телевизийн нэвтрүүлэг болон спортын цогц хөтөч
         </h1>
+        {/* Тайлбар текст */}
         <p className="para">
-          Find where to stream new, popular & upcoming entertainment with
-          JustWatch.
+          Шинэ, алдартай болон удахгүй гарах бүх төрлийн энтертайнмент контентыг 
+          хаанаас үзэж болохыг MovieSuggest-ээс хайж олоорой.
         </p>
         <div className="btn">
-          <button className="yellow">Discover Movies & TV shows</button>
-          <button className="transparent">Features</button>
+          {/* Товчлуурууд */}
+          <button className="yellow">Кино болон нэвтрүүлэг үзэх</button>
+          <button className="transparent">Боломжууд</button>
         </div>
       </div>
     </div>
