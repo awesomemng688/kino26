@@ -19,156 +19,115 @@ const MovieDetail = () => {
   useEffect(() => {
     const API_KEY = "31d6a9af8af968f358a6c5cc9f67daaf";
     const MOVIE_DETAIL_API = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=mn-MN`;
-    
     getMovieDetail(MOVIE_DETAIL_API);
     window.scrollTo(0, 0);
-  }, [id, getMovieDetail]); 
+  }, [id, getMovieDetail]);
 
   return (
-    <div className="details-container">
-      {/* Background Banner */}
-      <div
-        className="movie-banner-container"
-        style={{
-          background: currentMovie.backdrop_path 
-            ? `url('https://image.tmdb.org/t/p/original${currentMovie.backdrop_path}')` 
-            : "#1a1a1a",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
-      ></div>
+    <div className="details-page-wrapper" style={{ background: "#000", minHeight: "100vh", color: "#fff" }}>
+      {/* 1. БАННЕР ХЭСЭГ */}
+      <div className="banner-section" style={{
+        height: "50vh",
+        backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,1) 100%), url('https://image.tmdb.org/t/p/original${currentMovie.backdrop_path}')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center"
+      }}></div>
 
-      <div className="movie-details-container">
-        <div className="movie-detail-left">
-          {currentMovie.poster_path && (
-            <img
-              src={`https://image.tmdb.org/t/p/original${currentMovie.poster_path}`}
-              alt={currentMovie.original_title || "poster"}
-            />
-          )}
-        </div>
-        <div className="movie-detail-right">
-          <div className="title-category-para">
-            <h1 className="movie-title">{currentMovie.original_title}</h1>
-            <div className="movie-rating-release">
-              <span className="movie-rating">
-                Rating: <i className="rating-star fa-solid fa-star"></i> {currentMovie.vote_average ? Math.round(currentMovie.vote_average * 10) / 10 : 0}
-              </span>
-              <span className="movie-release">Release: {currentMovie.release_date}</span>
+      {/* 2. МЭДЭЭЛЛИЙН ХЭСЭГ (Responsive Container) */}
+      <div className="content-container">
+        <div className="movie-header">
+          <div className="poster-box">
+            <img src={`https://image.tmdb.org/t/p/w500${currentMovie.poster_path}`} alt="poster" />
+          </div>
+          <div className="info-box">
+            <h1 className="title">{currentMovie.original_title}</h1>
+            <div className="meta">
+              <span className="rating">⭐ {currentMovie.vote_average?.toFixed(1)}</span>
+              <span className="date">{currentMovie.release_date}</span>
             </div>
-            <div className="movie-genres">
-              {currentMovie.genres &&
-                currentMovie.genres.slice(0, 4).map((data) => (
-                  <span key={data.id}>{data.name}</span>
-                ))}
+            <div className="genres">
+              {currentMovie.genres?.map(g => <span key={g.id}>{g.name}</span>)}
             </div>
-            <p className="movie-description">{currentMovie.overview || "No description available."}</p>
+            <p className="overview">{currentMovie.overview}</p>
           </div>
         </div>
-      </div>
 
-      {/* VIDEO PLAYER SECTION */}
-      <div className="video-section">
-        <h2 className="player-title">КИНО ҮЗЭХ 🍿</h2>
-        <div className="iframe-wrapper">
-          <iframe 
-            src={id === "1265609" 
-              ? "https://vidoza.net/embed-mw4fnlbhv8zg.html" 
-              : `https://vidsrc.to/embed/movie/${id}`} 
-            frameBorder="0" 
-            // Бүх төрлийн хөтөчийн Full Screen эрхийг нээх
-            allowFullScreen
-            webkitallowfullscreen="true"
-            mozallowfullscreen="true"
-            title="Movie Player"
-            referrerPolicy="no-referrer"
-            // Sandbox-ыг Full Screen ажиллахаар тохируулах
-            sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation allow-presentation allow-fullscreen"
-            allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-          ></iframe>
+        {/* 3. ТОГЛУУЛАГЧ ХЭСЭГ */}
+        <div className="player-section">
+          <h2 className="watch-now-title">КИНО ҮЗЭХ 🍿</h2>
+          <div className="iframe-container">
+            <iframe 
+              src={`https://vidsrc.to/embed/movie/${id}`} 
+              frameBorder="0" 
+              allowFullScreen
+              allow="autoplay; fullscreen"
+              sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation allow-presentation allow-fullscreen"
+            ></iframe>
+          </div>
+          <p className="credit">Server Developer by: Awesome.!</p>
         </div>
-        <p className="dev-credit">Server Developer by: Awesome.!</p>
       </div>
 
       <style>{`
-        .movie-banner-container {
-          height: 450px;
-        }
-
-        .movie-details-container {
-          display: flex;
+        .content-container {
           max-width: 1200px;
           margin: -150px auto 0;
-          padding: 20px;
-          gap: 30px;
+          padding: 0 20px 50px;
           position: relative;
-          z-index: 2;
+          z-index: 5;
         }
 
-        .movie-detail-left img {
+        .movie-header {
+          display: flex;
+          gap: 40px;
+          align-items: flex-start;
+          margin-bottom: 50px;
+        }
+
+        .poster-box img {
           width: 300px;
           border-radius: 12px;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+          border: 1px solid #333;
         }
 
-        .video-section {
-          max-width: 1100px;
-          margin: 50px auto;
-          text-align: center;
-        }
+        .info-box { flex: 1; }
+        .title { font-size: 3rem; margin-bottom: 10px; }
+        .meta { margin-bottom: 20px; font-weight: bold; color: #e50914; display: flex; gap: 20px; }
+        .genres { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .genres span { background: #333; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; }
+        .overview { line-height: 1.6; color: #ccc; font-size: 1.1rem; }
 
-        .iframe-wrapper {
+        /* ТОГЛУУЛАГЧ */
+        .player-section { margin-top: 40px; text-align: center; }
+        .watch-now-title { color: #e50914; margin-bottom: 20px; letter-spacing: 2px; }
+        .iframe-container {
           position: relative;
-          padding-bottom: 56.25%; /* 16:9 харьцаа */
+          padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
           height: 0;
-          background: #000;
-          border-radius: 12px;
           overflow: hidden;
-          box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
+          background: #111;
+          border-radius: 12px;
         }
-
-        .iframe-wrapper iframe {
+        .iframe-container iframe {
           position: absolute;
           top: 0; left: 0; width: 100%; height: 100%;
         }
 
-        /* 📱 ГАР УТАСНЫ ТУСГАЙ ЗАСВАР */
-        @media (max-width: 768px) {
-          .movie-banner-container {
-            height: 200px;
-          }
-          .movie-details-container {
+        /* 📱 ГАР УТАСНЫ ТОХИРГОО (Media Queries) */
+        @media (max-width: 850px) {
+          .movie-header {
             flex-direction: column;
             align-items: center;
-            margin-top: -80px;
             text-align: center;
-            padding: 10px;
+            margin-top: -100px;
           }
-          .movie-detail-left img {
-            width: 160px;
-          }
-          .movie-title {
-            font-size: 1.4rem;
-          }
-          /* Гар утас дээр тоглуулагчийг дэлгэц дүүргэж харуулах */
-          .video-section {
-            max-width: 100%;
-            margin: 20px 0;
-            padding: 0; /* Хажуугийн зайг арилгав */
-          }
-          .iframe-wrapper {
-            border-radius: 0; /* Ирмэгийг тэгшилж дэлгэцэнд наана */
-          }
-          .player-title {
-            font-size: 1.2rem;
-          }
-        }
-
-        .dev-credit {
-          margin-top: 15px;
-          font-size: 0.7rem;
-          color: #666;
-          letter-spacing: 2px;
+          .poster-box img { width: 200px; }
+          .title { font-size: 1.8rem; }
+          .content-container { margin-top: -80px; padding: 0 15px 40px; }
+          .iframe-container { border-radius: 0; }
+          .meta { justify-content: center; }
+          .genres { justify-content: center; }
         }
       `}</style>
     </div>
