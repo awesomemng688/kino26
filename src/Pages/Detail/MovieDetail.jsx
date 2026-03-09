@@ -6,7 +6,7 @@ const MovieDetail = () => {
   const { id } = useParams();
   const [currentMovie, setCurrentMovie] = useState({});
 
-  // API URL-ыг useEffect дотор зарлах нь Cloudflare build-д илүү найдвартай
+  // API өгөгдөл татах функцийг useCallback-аар ороож, санах ойд хадгалах
   const getMovieDetail = useCallback(async (url) => {
     try {
       const movieDetail = await fetch(url);
@@ -18,12 +18,13 @@ const MovieDetail = () => {
   }, []);
 
   useEffect(() => {
-    const MOVIE_DETAIL_API = `https://api.themoviedb.org/3/movie/${id}?api_key=31d6a9af8af968f358a6c5cc9f67daaf&language=mn-MN`;
+    const API_KEY = "31d6a9af8af968f358a6c5cc9f67daaf";
+    const MOVIE_DETAIL_API = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=mn-MN`;
+    
     getMovieDetail(MOVIE_DETAIL_API);
     window.scrollTo(0, 0);
     
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]); 
+  }, [id, getMovieDetail]); 
 
   return (
     <div className="details-container">
@@ -35,7 +36,8 @@ const MovieDetail = () => {
             ? `url('https://image.tmdb.org/t/p/original${currentMovie.backdrop_path}')` 
             : "#1a1a1a",
           backgroundSize: 'cover',
-          backgroundPosition: 'center'
+          backgroundPosition: 'center',
+          height: '450px' // Баннерын өндөр
         }}
       ></div>
 
@@ -59,27 +61,28 @@ const MovieDetail = () => {
             </div>
             <div className="movie-genres">
               {currentMovie.genres &&
-                currentMovie.genres.slice(0, 4).map((data) => {
-                  return <span key={data.id}>{data.name}</span>;
-                })}
+                currentMovie.genres.slice(0, 4).map((data) => (
+                  <span key={data.id}>{data.name}</span>
+                ))}
             </div>
             <p className="movie-description">{currentMovie.overview || "Тайлбар одоогоор алга байна."}</p>
           </div>
         </div>
       </div>
 
-      {/* КИНО ТОГЛУУЛАГЧ ХЭСЭГ (War Machine 2026 болон бусад) */}
+      {/* КИНО ТОГЛУУЛАГЧ ХЭСЭГ */}
       <div className="video-section">
         <h2 className="player-title">КИНО ҮЗЭХ 🍿</h2>
         <div className="iframe-wrapper">
           <iframe 
             src="https://vidoza.net/embed-mw4fnlbhv8zg.html" 
             frameBorder="0" 
-            marginWidth="0" 
-            marginHeight="0" 
-            scrolling="no" 
             allowFullScreen
             title="Movie Player"
+            // Доорх тохиргоонууд нь холболтын алдаанаас сэргийлнэ
+            referrerPolicy="no-referrer-when-downgrade"
+            sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
+            allow="autoplay; encrypted-media; fullscreen"
           ></iframe>
         </div>
         <p className="dev-credit">Server Developer by: Awesome.!</p>
