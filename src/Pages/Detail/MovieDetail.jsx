@@ -37,7 +37,7 @@ const MovieDetail = () => {
             : "#1a1a1a",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          height: '450px' // Баннерын өндөр
+          height: '450px' 
         }}
       ></div>
 
@@ -74,13 +74,16 @@ const MovieDetail = () => {
       <div className="video-section">
         <h2 className="player-title">КИНО ҮЗЭХ 🍿</h2>
         <div className="iframe-wrapper">
+          {/* Динамик тоглуулагч: War Machine (1265609) бол Vidoza-г, бусад үед автомат серверийг харуулна */}
           <iframe 
-            src="https://vidoza.net/embed-mw4fnlbhv8zg.html" 
+            src={id === "1265609" 
+              ? "https://vidoza.net/embed-mw4fnlbhv8zg.html" 
+              : `https://vidsrc.to/embed/movie/${id}`} 
             frameBorder="0" 
             allowFullScreen
             title="Movie Player"
-            // Доорх тохиргоонууд нь холболтын алдаанаас сэргийлнэ
-            referrerPolicy="no-referrer-when-downgrade"
+            // 'Refused to connect' алдаанаас сэргийлэх гол тохиргоо
+            referrerPolicy="origin" 
             sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
             allow="autoplay; encrypted-media; fullscreen"
           ></iframe>
