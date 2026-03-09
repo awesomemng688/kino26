@@ -1,0 +1,567 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
+* {
+  margin: auto;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
+
+body {
+  background-color: rgb(6, 13, 23);
+}
+
+.container {
+  max-width: 95%;
+  text-align: center;
+  margin: 30px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.sub-heading {
+  margin-left: 2.5vw;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  position: relative;
+  color: white;
+}
+
+h1::before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  right: 30px;
+  bottom: -5px;
+  height: 2px;
+  width: 100px;
+  background-color: rgb(251, 197, 0);
+}
+
+.nav {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  line-height: 5vh;
+  background-color: rgb(6, 13, 23);
+  color: white;
+  display: flex;
+  max-width: 100%;
+  padding: 0vh 2.5vw;
+  justify-content: space-around;
+  align-items: center;
+}
+.nav #menu {
+  padding: 6px 10px;
+  font-size: 1.5rem;
+  background-color: rgb(28, 37, 47);
+  border-radius: 5px;
+  color: rgb(116, 160, 178);
+  margin: 10px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 20;
+  visibility: hidden;
+}
+.nav .logo {
+  flex-shrink: 3;
+  width: 150px;
+}
+.nav .logo img {
+  width: 150px;
+  margin-top: 12px;
+}
+.nav .links {
+  margin-left: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  width: 300px;
+}
+.nav .links img {
+  display: none;
+}
+.nav .links .active {
+  font-weight: bolder;
+  color: white !important;
+}
+.nav .links .links-div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav .links .links-div .link {
+  text-decoration: none;
+  font-size: 14px;
+  color: rgb(175, 170, 170);
+}
+.nav .links .links-div .link:hover {
+  color: white;
+}
+.nav .search {
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 4;
+}
+.nav .search input {
+  margin: 10px 15px;
+  padding: 10px 15px;
+  border: none;
+  width: 350px;
+  border-radius: 5px;
+  background-color: rgb(28, 37, 47);
+  color: rgb(175, 170, 170);
+  font-size: 14px;
+  font-weight: 600;
+  flex-grow: 1;
+  flex-shrink: 4;
+}
+.nav button {
+  margin: 10px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(28, 37, 47);
+  color: rgb(116, 160, 178);
+  font-weight: bold;
+}
+
+.carousel {
+  position: absolute;
+  height: 95vh;
+}
+.carousel img {
+  width: 100%;
+  height: 100%;
+  filter: opacity(0.4);
+}
+.carousel .movie-details {
+  height: 100%;
+  margin: 2.5vw;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+}
+.carousel .movie-details .details-container {
+  width: 60vw;
+  padding: 2vw;
+  color: white;
+  text-align: left;
+}
+.carousel .movie-details .details-container h2, .carousel .movie-details .details-container p {
+  text-decoration: none;
+}
+.carousel .movie-details .details-container .movie-title {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  position: relative;
+}
+.carousel .movie-details .details-container .movie-title::before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  right: 30px;
+  bottom: -5px;
+  height: 3px;
+  width: 200px;
+  background-color: rgb(251, 197, 0);
+}
+.carousel .movie-details .details-container .movie-description {
+  width: 90%;
+  font-size: 1.1rem;
+  font-style: italic;
+  margin: 30px 0px 50px 0px;
+}
+.carousel .movie-details .details-container .action-btn .btn {
+  text-decoration: none;
+  padding: 15px 50px;
+  margin-right: 20px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.carousel .movie-details .details-container .action-btn .watch-now {
+  background-color: rgb(251, 197, 0);
+  color: rgb(6, 13, 23);
+  box-shadow: 0px 0px 10px rgb(251, 197, 0);
+}
+.carousel .movie-details .details-container .action-btn .watch-now:hover {
+  box-shadow: 0px 0px 20px rgb(251, 197, 0);
+  transition: 0.5s ease-in-out;
+}
+.carousel .movie-details .details-container .action-btn .watch-trailer {
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  z-index: 10;
+}
+.carousel .movie-details .poster-container img {
+  width: 25vw;
+  float: right;
+  filter: opacity(1);
+  border-radius: 10%;
+  z-index: 10;
+}
+
+.card {
+  max-width: 225px;
+  min-height: 32rem;
+  margin: 15px 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1.5;
+  align-items: center;
+  text-align: left;
+  background-color: rgb(28, 37, 47);
+  text-decoration: none;
+  transition: all 0.5s ease-in-out;
+}
+.card:hover {
+  transform: scale(1.1);
+}
+.card img {
+  border-radius: 5px;
+  width: 100%;
+}
+.card .rating {
+  width: 100%;
+  margin: 10px;
+  padding: 5px 10px;
+  color: white;
+}
+.card .rating .title {
+  margin-top: 20px;
+  clear: both;
+}
+.card .rating i {
+  color: rgb(251, 197, 0);
+}
+.card .rating span {
+  float: right;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+.card .watch-trailer {
+  margin: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card .watch-trailer button {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.card .watch-trailer i {
+  margin-right: 10px;
+}
+.card .watch {
+  width: 95%;
+  padding: 8px;
+  margin: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: rgb(76, 90, 103);
+  color: rgb(87, 153, 239);
+  cursor: pointer;
+}
+.card .watch:hover {
+  background-color: rgb(251, 197, 0);
+  color: rgb(6, 13, 23);
+  transition: 0.3s ease-in-out;
+}
+.card .trailer {
+  width: 50%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 3px;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+}
+.card .trailer:hover {
+  background-color: rgb(76, 90, 103);
+  transition: all 0.2s ease-in-out;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 95%;
+  padding: 20px;
+  height: 35vh;
+  border-top: 0.5px solid rgb(28, 37, 47);
+}
+.footer .footer-item {
+  height: 100%;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.footer .footer-item .underline {
+  position: relative;
+}
+.footer .footer-item .underline::before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  right: 30px;
+  bottom: -5px;
+  height: 2px;
+  width: 3rem;
+  background-color: rgb(251, 197, 0);
+}
+.footer .footer-item h3 {
+  margin-bottom: 15px;
+  color: white;
+}
+.footer .footer-item ul {
+  display: flex;
+  flex-direction: column;
+}
+.footer .footer-item ul li {
+  list-style-type: none;
+  margin: 5px 0px;
+  color: rgb(116, 160, 178);
+  font-size: 0.9rem;
+}
+.footer .footer-item ul li:hover {
+  color: white;
+}
+.footer .footer-item .footer-last {
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1rem;
+  color: white;
+}
+.footer .footer-item .footer-last button {
+  background-color: rgb(251, 197, 0);
+  width: 100px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.footer .footer-item .footer-last .footer-name-tag {
+  margin-top: 10px;
+}
+.footer .footer-item .footer-last .footer-name-tag .footer-name {
+  font-weight: bolder;
+  font-size: 1.2rem;
+}
+.footer .footer-item .footer-last .footer-name-tag .footer-name .left-border {
+  color: rgb(251, 197, 0);
+}
+.footer .footer-item .footer-last .footer-name-tag .footer-tag {
+  font-style: italic;
+}
+.footer .footer-item .footer-last .social-icons {
+  width: 60%;
+  margin: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer .footer-item .footer-last .social-icons i {
+  padding: 15px;
+  border-radius: 50%;
+}
+.footer .footer-item .footer-last .social-icons i:hover {
+  cursor: pointer;
+  background-color: rgb(28, 37, 47);
+  transition: 0.3s;
+}
+
+@media screen and (min-width: 500px) and (max-width: 1080px) {
+  .carousel .movie-description {
+    margin-bottom: 30px !important;
+  }
+  .carousel .btn {
+    padding: 6px 26px !important;
+    font-size: 0.9rem !important;
+  }
+  .footer {
+    height: 40vh;
+  }
+  .footer .footer-item {
+    width: 50%;
+  }
+  .footer .footer-item:nth-child(1), .footer .footer-item:nth-child(2) {
+    border-bottom: 0.5px solid rgb(28, 37, 47);
+  }
+}
+@media screen and (max-width: 1000px) {
+  .sub-heading {
+    font-size: 1.6rem !important;
+  }
+  .nav {
+    flex-direction: column;
+  }
+  .nav .links {
+    display: none;
+  }
+  .nav .responsive-nav {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: -2vw;
+    top: 0px;
+    bottom: 0px;
+    width: 50vw;
+    background-color: rgb(6, 13, 23);
+    z-index: 10;
+    transition: 1s ease-in-out !important;
+  }
+  .nav .responsive-nav img {
+    margin-top: 50px;
+    display: inline-block;
+    width: 12rem;
+  }
+  .nav .responsive-nav .links-div {
+    height: 80vh;
+    display: block;
+    text-align: center;
+  }
+  .nav .responsive-nav .links-div .link {
+    font-size: 1rem;
+    display: block;
+    width: 95%;
+    z-index: 11;
+    padding: 10px 50px;
+    background-color: rgb(28, 37, 47);
+    position: relative;
+  }
+  .nav .responsive-nav .links-div .link:not(:last-child):after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    height: 1px;
+    width: 80%;
+    transform: translate(-50%);
+    background-color: rgb(76, 90, 103);
+  }
+  .nav #menu {
+    visibility: visible;
+    cursor: pointer;
+  }
+  .nav #menu #menu-checkbox {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 22;
+    height: 35px;
+    width: 35px;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .nav .search {
+    width: 100%;
+  }
+  .nav button {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+  }
+  .carousel {
+    height: 50vh;
+  }
+  .carousel .movie-details .movie-title {
+    font-size: 2rem !important;
+  }
+  .carousel .movie-details .rating-release {
+    font-size: 1rem !important;
+  }
+  .carousel .movie-details .movie-description {
+    font-size: 0.9rem !important;
+    width: 90% !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  .carousel {
+    height: 45vh;
+  }
+  .carousel .movie-details {
+    height: auto !important;
+    bottom: 30px;
+    padding-left: 10px;
+  }
+  .carousel .movie-details .details-container {
+    width: 100% !important;
+  }
+  .carousel .movie-details .details-container .movie-description {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+  }
+  .carousel .movie-details .details-container .btn {
+    padding: 4px 20px !important;
+    font-size: 0.8rem !important;
+  }
+  .carousel .poster-container {
+    display: none;
+  }
+  .footer .footer-item {
+    height: 30vh;
+    text-align: center;
+    width: 100%;
+    border-bottom: 0.5px solid rgb(28, 37, 47);
+  }
+  .footer .footer-item .underline {
+    position: relative;
+  }
+  .footer .footer-item .underline::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    height: 2px;
+    transform: translate(-50%);
+    width: 50px;
+    background-color: rgb(251, 197, 0);
+  }
+}
+@media screen and (max-width: 512px) {
+  .container {
+    width: 100vw !important;
+    justify-content: space-between;
+  }
+  .responsive-nav {
+    width: 60vw !important;
+  }
+  .responsive-nav img {
+    width: 150px !important;
+  }
+  .card {
+    max-width: 46% !important;
+    min-height: 100% !important;
+    font-size: 80%;
+  }
+  .card .rating .title {
+    font-weight: bold;
+  }
+  .card .rating span {
+    font-size: 0.7rem;
+    font-weight: bolder;
+  }
+}/*# sourceMappingURL=main.css.map */
