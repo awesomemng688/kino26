@@ -2,211 +2,223 @@
 
 // MOVIE DETAIL
 
-.details-container{
-    
-    .movie-banner-container{
-        height: 50vh;
-        background-repeat: no-repeat;
-        background-position: center !important;
-        background-size: cover !important;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    
-        &::before{
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    
-        &::after{
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
-            background-image: linear-gradient(to top, $bg-black, rgba(black, 0));
-        }
+.details-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: $bg-black;
+
+  .movie-banner-container {
+    height: 50vh;
+    background-repeat: no-repeat;
+    background-position: center !important;
+    background-size: cover !important;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(to top, $bg-black, rgba(black, 0));
     }
-    
-    .movie-details-container{
-        max-width: 80vw;
-        position: relative;
-        margin-top: -200px;
-        margin-bottom: 10vh;
-        display: flex;
-        flex-shrink: 1.5;
-        z-index: 10;
-    
-        .movie-detail-left{
-            flex: 1;
-    
-            img{
-                max-width: 375px;
-                border-radius: 20px;
-            }
-        }
-    
-        .movie-detail-right{
-            width: 100%;
-            padding: 0rem 2vw;
-            color: $font-primary;
+  }
 
-            .title-category-para{
-                position: absolute;
-                top: 0;
+  .movie-details-container {
+    max-width: 1200px; // vw-ийн оронд тогтмол утга өгвөл том дэлгэцэнд илүү тохиромжтой
+    margin: -150px auto 50px;
+    padding: 0 20px;
+    display: flex;
+    position: relative;
+    z-index: 10;
+    gap: 40px;
 
-                .movie-title{
-                    font-size: 4.5rem;
-                    font-weight: bolder;
-                    margin-bottom: 1rem;
-                    position: relative;
-    
-                    &::before{
-                        content: "";
-                        width: 30%;
-                        height: 3px;
-                    }
-                }
+    .movie-detail-left {
+      flex: 0 0 300px; // Постерын хэмжээг тогтмол барих
 
-                .movie-rating-release{
-                    margin-bottom: 1.5rem;
-                    font-size: 1rem;
-                    font-style: italic;
-                    font-weight: bold;
-
-                    .movie-rating{
-                        margin-right: 10vw !important;
-
-                        .rating-star{
-                            color: $btn-color;
-                        }
-                    }
-                }
-    
-                .movie-genres{
-                    margin-bottom: 2rem;
-    
-                    span{
-                        font-size: 0.85rem;
-                        font-weight: bold;
-                        padding: 7px 25px;
-                        margin-right: 10px;
-                        border: 2.25px solid $font-primary;
-                        border-radius: 25px;
-                        background-color: $bg-black;
-                    }
-                }
-    
-                .movie-description{
-                    font-size: 1.1rem;
-                }
-            }
-
-            
-        }
+      img {
+        width: 100%;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
     }
+
+    .movie-detail-right {
+      flex: 1;
+      color: $font-primary;
+
+      .title-category-para {
+        // Absolute байрлалыг болиулж, урсгалаар нь байрлуулна
+        display: flex;
+        flex-direction: column;
+
+        .movie-title {
+          font-size: 3.5rem;
+          font-weight: 800;
+          margin-bottom: 1rem;
+          line-height: 1.1;
+        }
+
+        .movie-rating-release {
+          margin-bottom: 1.5rem;
+          font-size: 1.1rem;
+          font-weight: 600;
+          display: flex;
+          gap: 30px;
+
+          .movie-rating {
+            .rating-star {
+              color: $btn-color;
+            }
+          }
+        }
+
+        .movie-genres {
+          margin-bottom: 2rem;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+
+          span {
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 8px 20px;
+            border: 2px solid $font-primary;
+            border-radius: 25px;
+            background-color: rgba($bg-black, 0.6);
+          }
+        }
+
+        .movie-description {
+          font-size: 1.1rem;
+          line-height: 1.6;
+          opacity: 0.9;
+          max-width: 800px;
+        }
+      }
+    }
+  }
+
+  // Видео тоглуулагчийн хэсгийг энд нэмлээ
+  .video-section {
+    max-width: 1100px;
+    margin: 80px auto;
+    padding: 0 20px;
+    text-align: center;
+
+    .player-title {
+      font-size: 2rem;
+      color: $font-primary;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+    }
+
+    .iframe-wrapper {
+      position: relative;
+      padding-bottom: 56.25%; // 16:9 ratio
+      height: 0;
+      background: #000;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .dev-credit {
+      margin-top: 25px;
+      font-size: 0.8rem;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+  }
 }
-
 
 // RESPONSIVE
 
-@media screen and (max-width: 1300px) {
-    .movie-details-container{
-        max-width: 80vw !important;
-
-        .movie-detail-left{
-            img{
-                max-width: 25vw !important;
-            }
-        }
-        .movie-detail-right{
-            .movie-title{
-                font-size: 3rem !important;
-            }
-
-            .movie-rating-release{
-                margin-bottom: 1rem !important;
-                font-size: 0.9rem !important;
-            }
-
-            .movie-genres{
-                span{
-                    font-size: 0.7rem !important;
-                    padding: 5px 20px !important;
-                }
-            }
-            .movie-description{
-                font-size: 0.9rem !important;
-            }
-        }
+@media screen and (max-width: 1024px) {
+  .movie-details-container {
+    margin-top: -100px;
+    .movie-detail-left {
+      flex: 0 0 220px;
     }
+    .movie-detail-right .title-category-para .movie-title {
+      font-size: 2.5rem;
+    }
+  }
 }
 
-
-@media screen and (max-width: 776px) {
-    .movie-banner-container{
-        height: 40vh !important;
+@media screen and (max-width: 768px) {
+  .details-container {
+    .movie-banner-container {
+      height: 35vh;
     }
 
-    .movie-details-container{
-        max-width: 90vw !important;
-    
-        .movie-detail-right{
-            .movie-title{
-                font-size: 2rem !important;
-                margin-bottom: 1rem !important;
-            }
+    .movie-details-container {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: -80px;
 
-            .movie-genres{
-                margin-bottom: 25px !important;
-                display: block;
-    
-                span{
-                    font-size: 0.6rem !important;
-                    padding: 3px 15px !important;
-                }
-            }
+      .movie-detail-left {
+        flex: 0 0 auto;
+        width: 180px;
+      }
+
+      .movie-detail-right {
+        padding: 0;
+        
+        .title-category-para {
+          align-items: center;
+
+          .movie-title {
+            font-size: 2rem;
+          }
+
+          .movie-rating-release {
+            justify-content: center;
+            font-size: 0.9rem;
+          }
+
+          .movie-genres {
+            justify-content: center;
+          }
+
+          .movie-description {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+
+    .video-section {
+        margin: 40px auto;
+        padding: 0 10px;
+        
+        .player-title {
+            font-size: 1.5rem;
+        }
+
+        .iframe-wrapper {
+            border-radius: 8px;
         }
     }
+  }
 }
 
-
-@media screen and (max-width: 640px) {
-    .movie-details-container{
-        max-width: 95vw !important;
-        flex-direction: column;
-        height: 100%;
-
-        .movie-detail-left{
-            width: 40vw;
-            img{
-                max-width: 100% !important;
-            }
-        }
-
-        .movie-detail-right{
-            position: relative !important;
-            text-align: center;
-            padding: 0px !important;
-            margin-bottom: 40vh;
-
-            .movie-title{
-                margin-top: 1rem;
-                &::before{
-                    content: "";
-                    left: 50%;
-                    transform: translateX(-50%);
-                }
-            }
-            .movie-description{
-                width: 90%;
-            }
-        }
+@media screen and (max-width: 480px) {
+    .details-container .movie-details-container .movie-detail-right .title-category-para .movie-title {
+        font-size: 1.6rem;
     }
 }
