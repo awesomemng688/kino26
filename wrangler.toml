@@ -1,9 +1,0 @@
-name = "avengers"
-compatibility_date = "2026-03-09"
-type = "javascript"
-
-main = "worker.js"
-
-[site]
-bucket = "./build"      # React-ийн build folder
-entry-point = "worker-site"
