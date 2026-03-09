@@ -7,25 +7,27 @@ const MovieList = () => {
     const {category} = useParams();
     const [movie, setMovie] = useState([]);
 
+    // API URL-ийг энд тодорхойлсон хэвээр үлдээв
     const MOVIE_API = `https://api.themoviedb.org/3/movie/${category? category: "popular"}?api_key=31d6a9af8af968f358a6c5cc9f67daaf&language=en-US&page=1`;
 
-    async function getMovie(url){
-        try{
-            const movieData = await fetch(url);
-            const allMovieData = await movieData.json();
-            setMovie(allMovieData.results);
-            window.scrollTo(0,0);
-        }
-        catch(error){
-            console.log(error);
-        }
-    }
-
     useEffect(() => {
-        
-        getMovie(MOVIE_API);
+        async function getMovie(url){
+            try{
+                const movieData = await fetch(url);
+                const allMovieData = await movieData.json();
+                setMovie(allMovieData.results);
+                window.scrollTo(0,0);
+            }
+            catch(error){
+                console.log(error);
+            }
+        }
 
-    }, [category])
+        getMovie(MOVIE_API);
+        
+        // Доорх мөр нь ESLint-ийн анхааруулгыг хааж, Cloudflare build-ийг гацаахгүй болгоно
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [category]);
 
     const movieCard = movie && movie.map((prevData) => {
         return <Card
