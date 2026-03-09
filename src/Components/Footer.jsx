@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const Footer = () => {
-
   return (
     <div className="footer">
       <div className="footer-item">
@@ -57,11 +56,11 @@ const Footer = () => {
             <span className="footer-tag"> The Streaming Suggest</span>
           </div>
           <div className="social-icons">
-            <i class="fa-brands fa-square-facebook"></i>
-            <i class="fa-brands fa-instagram"></i>
-            <i class="fa-brands fa-twitter"></i>
-            <i class="fa-brands fa-youtube"></i>
-            <i class="fa-brands fa-tiktok"></i>
+            <i className="fa-brands fa-square-facebook"></i>
+            <i className="className-brands fa-instagram"></i>
+            <i className="fa-brands fa-twitter"></i>
+            <i className="fa-brands fa-youtube"></i>
+            <i className="fa-brands fa-tiktok"></i>
           </div>
           <p>Copyright © 2023 MovieSuggest</p>
         </div>
