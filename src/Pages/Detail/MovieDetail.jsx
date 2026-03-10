@@ -5,6 +5,8 @@ import "./moviedetail.scss";
 const MovieDetail = () => {
   const { id } = useParams();
   const [currentMovie, setCurrentMovie] = useState({});
+  // Сервер сонгох state (Хэрэв vidsrc ажиллахгүй бол өөрийг ашиглана)
+  const [server, setServer] = useState("vidsrc_xyz");
 
   const getMovieDetail = useCallback(async (url) => {
     try {
@@ -23,9 +25,15 @@ const MovieDetail = () => {
     window.scrollTo(0, 0);
   }, [id, getMovieDetail]);
 
+  // Серверүүдийн жагсаалт
+  const servers = {
+    vidsrc_xyz: `https://vidsrc.xyz/embed/movie?tmdb=${id}`,
+    vidsrc_me: `https://vidsrc.me/embed/movie?tmdb=${id}`,
+    autoembed: `https://player.autoembed.cc/embed/movie/${id}`
+  };
+
   return (
     <div className="details-page-wrapper">
-      {/* 1. БАННЕР ХЭСЭГ */}
       <div 
         className="banner-section" 
         style={{
@@ -34,22 +42,18 @@ const MovieDetail = () => {
         }}
       ></div>
 
-      {/* 2. МЭДЭЭЛЛИЙН ХЭСЭГ */}
       <div className="content-container">
         <div className="movie-header">
           <div className="poster-box">
             {currentMovie.poster_path && (
-              <img 
-                src={`https://image.tmdb.org/t/p/w500${currentMovie.poster_path}`} 
-                alt={currentMovie.title || "Movie Poster"} 
-              />
+              <img src={`https://image.tmdb.org/t/p/w500${currentMovie.poster_path}`} alt={currentMovie.title} />
             )}
           </div>
           <div className="info-box">
             <h1 className="title">{currentMovie.title || currentMovie.original_title}</h1>
             <div className="meta">
-              <span className="rating">⭐ {currentMovie.vote_average?.toFixed(1)} / 10</span>
-              <span className="date">📅 {currentMovie.release_date}</span>
+              <span>⭐ {currentMovie.vote_average?.toFixed(1)}</span>
+              <span>📅 {currentMovie.release_date}</span>
             </div>
             <div className="genres">
               {currentMovie.genres?.map(g => <span key={g.id}>{g.name}</span>)}
@@ -58,18 +62,24 @@ const MovieDetail = () => {
           </div>
         </div>
 
-        {/* 3. ТОГЛУУЛАГЧ ХЭСЭГ */}
+        {/* ТОГЛУУЛАГЧ ХЭСЭГ */}
         <div className="player-section">
           <h2 className="watch-now-title">КИНО ҮЗЭХ 🍿</h2>
+          
+          {/* Сервер сонгох товчнууд - Хэрэв кино гарахгүй бол сольж үзнэ */}
+          <div className="server-selector">
+            <button className={server === "vidsrc_xyz" ? "active" : ""} onClick={() => setServer("vidsrc_xyz")}>Server 1</button>
+            <button className={server === "vidsrc_me" ? "active" : ""} onClick={() => setServer("vidsrc_me")}>Server 2</button>
+            <button className={server === "autoembed" ? "active" : ""} onClick={() => setServer("autoembed")}>Server 3</button>
+          </div>
+
           <div className="iframe-container">
             <iframe 
-              // ЭНЭ МӨР build алдааг засна!
-              title={`${currentMovie.title || 'Movie'} Player`}
-              src={`https://vidsrc.to/embed/movie/${id}`} 
+              title="Movie Player"
+              src={servers[server]} 
               frameBorder="0" 
               allowFullScreen={true}
-              // Доорх атрибутууд нь бүх хөтөч дээр Fullscreen ажиллуулна
-              allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+              allow="autoplay; encrypted-media; fullscreen"
               sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation allow-presentation allow-fullscreen"
               referrerPolicy="no-referrer"
             ></iframe>
@@ -79,29 +89,35 @@ const MovieDetail = () => {
       </div>
 
       <style>{`
-        .details-page-wrapper { background: #000; min-height: 100vh; color: #fff; overflow-x: hidden; }
+        .details-page-wrapper { background: #000; min-height: 100vh; color: #fff; }
         .banner-section { height: 60vh; background-size: cover; background-position: center; }
         .content-container { max-width: 1200px; margin: -200px auto 0; padding: 0 20px 80px; position: relative; z-index: 10; }
-        .movie-header { display: flex; gap: 40px; align-items: flex-start; margin-bottom: 60px; }
-        .poster-box img { width: 300px; border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,1); border: 1px solid rgba(255,255,255,0.1); }
-        .info-box { flex: 1; }
-        .title { font-size: 3.5rem; font-weight: 800; margin-bottom: 15px; }
-        .meta { margin-bottom: 25px; font-size: 1.1rem; display: flex; gap: 30px; font-weight: 600; color: #ffcc00; }
-        .genres { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 25px; }
-        .genres span { background: rgba(255,255,255,0.1); padding: 6px 18px; border-radius: 30px; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.2); }
-        .overview { line-height: 1.8; color: #ddd; font-size: 1.15rem; }
-        .player-section { margin-top: 60px; text-align: center; border-top: 1px solid #222; padding-top: 50px; }
-        .watch-now-title { color: #e50914; margin-bottom: 30px; font-size: 2rem; font-weight: bold; letter-spacing: 3px; }
-        .iframe-container { position: relative; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 16px; overflow: hidden; }
-        .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        .credit { margin-top: 30px; font-size: 0.75rem; color: #555; text-transform: uppercase; letter-spacing: 4px; }
+        .movie-header { display: flex; gap: 40px; margin-bottom: 50px; }
+        .poster-box img { width: 300px; border-radius: 16px; box-shadow: 0 10px 30px #000; }
+        .info-box { flex: 1; text-align: left; }
+        .title { font-size: 3.5rem; margin-bottom: 15px; }
+        .meta { display: flex; gap: 20px; color: #ffcc00; font-weight: bold; margin-bottom: 20px; }
+        .genres { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .genres span { background: #333; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; }
+        .overview { color: #ccc; line-height: 1.6; }
 
-        @media (max-width: 900px) {
-          .movie-header { flex-direction: column; align-items: center; text-align: center; margin-top: -120px; }
-          .poster-box img { width: 220px; }
+        /* Server Buttons */
+        .server-selector { margin-bottom: 20px; display: flex; justify-content: center; gap: 10px; }
+        .server-selector button { 
+          background: #222; border: 1px solid #444; color: white; padding: 8px 20px; 
+          border-radius: 5px; cursor: pointer; transition: 0.3s;
+        }
+        .server-selector button.active { background: #e50914; border-color: #e50914; }
+
+        .player-section { margin-top: 50px; text-align: center; }
+        .iframe-container { position: relative; padding-bottom: 56.25%; height: 0; background: #000; border-radius: 12px; overflow: hidden; }
+        .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .credit { margin-top: 20px; font-size: 0.8rem; color: #444; letter-spacing: 2px; }
+
+        @media (max-width: 850px) {
+          .movie-header { flex-direction: column; align-items: center; text-align: center; margin-top: -100px; }
+          .poster-box img { width: 200px; }
           .title { font-size: 2rem; }
-          .content-container { margin-top: -150px; }
-          .iframe-container { border-radius: 0; margin: 0 -20px; }
         }
       `}</style>
     </div>
